@@ -1,36 +1,64 @@
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, TextInput, View, FlatList } from "react-native";
+import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/GoalInput";
 
 export default function App() {
   const [enteredText, setEnteredText] = useState("");
   const [goals, setGoals] = useState([]);
   const onChangeHandler = (value) => {
+    console.log("val: ", value);
     setEnteredText(value);
   };
   const onSubmitHandler = () => {
+    if (enteredText.trim() === "") return;
     setGoals((prevValues) => [
       ...prevValues,
-      { id: Date.now(), goal: enteredText },
+      { key: Date.now(), goal: enteredText, completed: false },
     ]);
+    setEnteredText("");
   };
 
+  const onSetComplete = (id) => {
+    setGoals((prevGoals) =>
+      prevGoals.map((goal) =>
+        goal.key === id ? { ...goal, completed: !goal.completed } : goal
+      )
+    );
+  };
+
+  const onDelete = (id) => {
+    setGoals((prevGoals) => prevGoals.filter((goal) => goal.key !== id));
+  };
   return (
     // <Text>test text</Text>
     <View style={styles.container}>
       <View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="your course goal!"
-            onChangeText={onChangeHandler}
-          />
-          <Button title="Add Goal" onPress={onSubmitHandler}></Button>
-        </View>
+        <GoalInput
+          onChangeHandler={onChangeHandler}
+          onSubmitHandler={onSubmitHandler}
+          value={enteredText}
+        />
+
         <View style={styles.listGoals}>
-          {goals.map((goal) => (
-            <Text key={goal.id}>{goal.goal}</Text>
-          ))}
+          <FlatList
+            alwaysBounceVertical={false}
+            keyExtractor={(item, index) => {
+              return item.key;
+            }}
+            data={goals}
+            renderItem={(itemData) => {
+              return (
+                <GoalItem
+                  text={itemData.item.goal}
+                  completed={itemData.item.completed}
+                  id={itemData.item.key}
+                  onSetComplete={onSetComplete}
+                  onDelete={onDelete}
+                />
+              );
+            }}
+          />
         </View>
       </View>
     </View>
@@ -45,21 +73,11 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
-  inputStyle: {
-    backgroundColor: "white",
-    flex: 1,
-  },
-  inputContainer: {
-    flexDirection: "row",
-    gap: 6,
-    alignItems: "center",
-    // flex: 1,
-    marginBottom: 24,
-  },
-
   listGoals: {
     // flex: 5,
     borderTopWidth: 1,
     borderTopColor: "#6d6d6d",
+    marginVertical: 8,
+    zIndex: 0,
   },
 });
