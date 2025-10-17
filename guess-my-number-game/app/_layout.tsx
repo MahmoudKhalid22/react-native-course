@@ -1,12 +1,9 @@
 import "react-native-reanimated";
 
+import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import OpponentGuess from "./components/Opponent/OpponentGuess";
-
-export const unstable_settings = {
-  anchor: "(tabs)",
-};
+import { ImageBackground, StyleSheet } from "react-native";
+import StartGame from "./screens/StartGame";
 
 export default function RootLayout() {
   const [num, setNum] = useState(0);
@@ -21,54 +18,24 @@ export default function RootLayout() {
     }
     setNum(numValue);
   };
-  return guessMode ? (
-    <OpponentGuess onSetGuessMode={setGuessMode} targetNumber={num} />
-  ) : (
-    <View style={styles.inputContainer}>
-      <Text style={styles.text}>
-        Enter Your Number! so opponent can guess between 1 - 10
-      </Text>
-      <TextInput
-        style={[styles.input, !err && styles.marginBottom]}
-        keyboardType="numeric"
-        onChangeText={onChangeHandler}
-        placeholder="Enter the number Here"
-        placeholderTextColor={"#888"}
-      />
-      {err && <Text style={styles.error}>{err}</Text>}
-      <Button title="Go To Guess" onPress={() => setGuessMode(true)} />
-    </View>
+  return (
+    <LinearGradient colors={["#4e0329", "#ddb52f"]} style={styles.rootScreen}>
+      <ImageBackground
+        source={require("../assets/images/background.png")}
+        resizeMode="contain"
+        style={styles.rootScreen}
+        imageStyle={styles.backgroundImage}
+      >
+        <StartGame />
+      </ImageBackground>
+    </LinearGradient>
   );
 }
-
 const styles = StyleSheet.create({
-  inputContainer: {
+  rootScreen: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 24,
   },
-  text: {
-    textAlign: "center",
-    fontSize: 20,
-    lineHeight: 36,
-  },
-  marginBottom: {
-    marginBottom: 48,
-  },
-  input: {
-    borderBottomWidth: 2,
-    borderColor: "#6C5CE7",
-    borderRadius: 12,
-    padding: 8,
-    width: "100%",
-    marginTop: 48,
-    fontSize: 24,
-    textAlign: "center",
-  },
-  error: {
-    color: "#ff0000",
-    marginBottom: 36,
-    marginTop: 12,
+  backgroundImage: {
+    opacity: 0.15,
   },
 });
