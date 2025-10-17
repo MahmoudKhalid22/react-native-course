@@ -1,6 +1,7 @@
 import "react-native-reanimated";
 
 import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 import StartGame from "./screens/StartGame";
@@ -19,16 +20,19 @@ export default function RootLayout() {
     setNum(numValue);
   };
   return (
-    <LinearGradient colors={["#4e0329", "#ddb52f"]} style={styles.rootScreen}>
-      <ImageBackground
-        source={require("../assets/images/background.png")}
-        resizeMode="contain"
-        style={styles.rootScreen}
-        imageStyle={styles.backgroundImage}
-      >
-        <StartGame />
-      </ImageBackground>
-    </LinearGradient>
+    <>
+      <StatusBar style="light" />
+      <LinearGradient colors={["#4e0329", "#ddb52f"]} style={styles.rootScreen}>
+        <ImageBackground
+          source={require("../assets/images/background.png")}
+          resizeMode="contain"
+          style={styles.rootScreen}
+          imageStyle={styles.backgroundImage}
+        >
+          <StartGame />
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 }
 const styles = StyleSheet.create({

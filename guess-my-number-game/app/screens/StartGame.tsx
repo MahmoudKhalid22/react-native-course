@@ -10,6 +10,8 @@ function StartGame() {
         keyboardType="number-pad"
         autoCapitalize="none"
         autoCorrect={false}
+        placeholder="00"
+        placeholderTextColor={"#6d6d6d"}
       />
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
