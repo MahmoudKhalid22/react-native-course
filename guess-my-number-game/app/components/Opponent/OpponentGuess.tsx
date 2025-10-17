@@ -1,20 +1,70 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 function OpponentGuess({
   onSetGuessMode,
+  targetNumber,
 }: {
-  onSetGuessMode: (b: boolean) => {};
+  onSetGuessMode: Dispatch<SetStateAction<boolean>>;
+  targetNumber: number;
 }) {
   const [randomNumber, setRandomNumber] = useState(0);
-  const generateRandomNumber = () => {
-    const num = Math.ceil(Math.random() * 10);
-    setRandomNumber(num);
-    console.log("clicked");
-  };
+  const [minBound, setMinBound] = useState(1);
+  const [maxBound, setMaxBound] = useState(10);
+  const [win, setWin] = useState(false);
+  const [lie, setLie] = useState(false);
+  const [tries, setTries] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+
   useEffect(() => {
-    generateRandomNumber();
-  }, []);
+    const firstGuess = generateRandomNumber(1, 10);
+    setRandomNumber(firstGuess);
+    if (firstGuess === targetNumber) setWin(true);
+  }, [targetNumber]);
+
+  const generateRandomNumber = (min: number, max: number) => {
+    if (min >= max) return min;
+    const num = Math.floor(Math.random() * (max - min + 1)) + min;
+    console.log("clicked");
+    return num;
+  };
+
+  const handleHigher = () => {
+    if (randomNumber > targetNumber) {
+      setLie(true);
+      return;
+    }
+    if (tries > 2) {
+      setGameOver(true);
+      return;
+    }
+    setTries(() => tries + 1);
+    setLie(false);
+    const newMin = randomNumber + 1;
+    const newGuess = generateRandomNumber(newMin, maxBound);
+    setMinBound(newMin);
+    setRandomNumber(newGuess);
+    if (newGuess === targetNumber) setWin(true);
+  };
+
+  const handleLower = () => {
+    if (randomNumber < targetNumber) {
+      setLie(true);
+      return;
+    }
+    if (tries > 2) {
+      setGameOver(true);
+      return;
+    }
+    setTries(() => tries + 1);
+    setLie(false);
+    const newMax = randomNumber - 1;
+    const newGuess = generateRandomNumber(minBound, newMax);
+    setMaxBound(newMax);
+    setRandomNumber(newGuess);
+
+    if (newGuess === targetNumber) setWin(true);
+  };
 
   return (
     <View style={styles.opponentContainer}>
@@ -27,13 +77,25 @@ function OpponentGuess({
         placeholder="Guess the number"
         placeholderTextColor={"#888"}
       /> */}
+      <Text>Tries : {tries}</Text>
       <Text style={styles.textInput}>guessed: {randomNumber}</Text>
+      {win && <Text>Congrats! the number is correct</Text>}
+      {lie && <Text>Don't lie</Text>}
+      {gameOver && <Text>Game Over</Text>}
       <View style={styles.buttons}>
         <View style={styles.button}>
-          <Button title="less" onPress={generateRandomNumber} />
+          <Button
+            title="less"
+            onPress={handleLower}
+            disabled={win || gameOver}
+          />
         </View>
         <View style={styles.button}>
-          <Button title="higher" onPress={generateRandomNumber} />
+          <Button
+            title="higher"
+            onPress={handleHigher}
+            disabled={win || gameOver}
+          />
         </View>
       </View>
     </View>

@@ -22,7 +22,7 @@ export default function RootLayout() {
     setNum(numValue);
   };
   return guessMode ? (
-    <OpponentGuess onSetGuessMode={setGuessMode} />
+    <OpponentGuess onSetGuessMode={setGuessMode} targetNumber={num} />
   ) : (
     <View style={styles.inputContainer}>
       <Text style={styles.text}>
