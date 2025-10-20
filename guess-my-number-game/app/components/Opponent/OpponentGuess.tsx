@@ -24,7 +24,7 @@ function OpponentGuess({
 
   const generateRandomNumber = (min: number, max: number) => {
     if (min >= max) return min;
-    const num = Math.floor(Math.random() * (max - min + 1)) + min;
+    const num = Math.floor(Math.random() * (max - min)) + min;
     console.log("clicked");
     return num;
   };

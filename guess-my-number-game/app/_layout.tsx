@@ -4,21 +4,22 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { ImageBackground, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Game from "./screens/Game";
 import StartGame from "./screens/StartGame";
 
 export default function RootLayout() {
-  const [num, setNum] = useState(0);
-  const [err, setErr] = useState("");
-  const [guessMode, setGuessMode] = useState(false);
-  const onChangeHandler = (value: string) => {
-    const numValue = parseInt(value, 10) || 0;
-    setErr("");
-    if (+value > 10 || +value === 0) {
-      setErr("please enter allowed value between 1 and 10");
-      return;
-    }
-    setNum(numValue);
-  };
+  const [userNumber, setUserNumber] = useState("");
+
+  function pickedNumberHandler(pickedNumber: string) {
+    setUserNumber(pickedNumber);
+  }
+
+  let screen = <StartGame onPickNumber={pickedNumberHandler} />;
+
+  if (userNumber) {
+    screen = <Game userNumber={userNumber} />;
+  }
   return (
     <>
       <StatusBar style="light" />
@@ -29,7 +30,7 @@ export default function RootLayout() {
           style={styles.rootScreen}
           imageStyle={styles.backgroundImage}
         >
-          <StartGame />
+          <SafeAreaView>{screen}</SafeAreaView>
         </ImageBackground>
       </LinearGradient>
     </>
