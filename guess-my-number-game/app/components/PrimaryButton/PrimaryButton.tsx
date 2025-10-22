@@ -1,11 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 function PrimaryButton({
   children,
   onPress,
 }: {
-  children: string;
+  children: ReactNode | string;
   onPress: () => void;
 }) {
   return (
