@@ -3,7 +3,7 @@
     "name": "guess-my-number-game",
     "slug": "guess-my-number-game",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "guessmynumbergame",
     "userInterfaceStyle": "automatic",
