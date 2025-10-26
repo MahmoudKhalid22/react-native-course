@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import PrimaryButton from "../components/PrimaryButton/PrimaryButton";
-import Title from "../components/Title.ios";
+import Title from "../components/Title";
 import NumberContainer from "../components/game/NumberContainer";
 import Card from "../components/ui/Card";
 import GuessLogItem from "../components/ui/GuessLogItem";
@@ -128,7 +128,7 @@ function Game(
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
-
+      {content}
       {/* <View>LOG ROUNDS</View> */}
       <View style={styles.listContainer}>
         {/* {guessRounds.map(guessRound => <Text key={guessRound}>{guessRound}</Text>)} */}

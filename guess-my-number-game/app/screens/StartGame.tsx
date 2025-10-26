@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import PrimaryButton from "../components/PrimaryButton/PrimaryButton";
-import Title from "../components/Title.ios";
+import Title from "../components/Title";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
 import Colors from "../constants/Colors";

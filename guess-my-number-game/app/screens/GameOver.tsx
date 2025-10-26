@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import PrimaryButton from "../components/PrimaryButton/PrimaryButton";
-import Title from "../components/Title.ios";
+import Title from "../components/Title";
 import Colors from "../constants/Colors";
 
 function GameOver({

@@ -1,6 +1,6 @@
-import "react-native-reanimated";
+// import "react-native-reanimated";
+import * as SplashScreen from "expo-splash-screen";
 
-import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
@@ -10,6 +10,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Game from "./screens/Game";
 import GameOver from "./screens/GameOver";
 import StartGame from "./screens/StartGame";
+
+SplashScreen.preventAutoHideAsync(); // prevents the splash screen from hiding automatically
 
 export default function RootLayout() {
   const [userNumber, setUserNumber] = useState("");
@@ -22,7 +24,12 @@ export default function RootLayout() {
   });
 
   if (!fontsLoaded) {
-    return <AppLoading />;
+    const prepare = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // simulate loading
+      await SplashScreen.hideAsync();
+    };
+    prepare();
+    return;
   }
 
   function pickedNumberHandler(pickedNumber: string) {
