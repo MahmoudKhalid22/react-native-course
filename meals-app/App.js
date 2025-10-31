@@ -11,7 +11,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import FavoriteMeals from "./screens/FavoriteMeals";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import {store} from './store/redux/store'
+import { store } from "./store/redux/store";
+import { Provider } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 const myDrawer = createDrawerNavigator();
@@ -56,13 +57,11 @@ function DrawerNavigator() {
 }
 
 export default function App() {
-
-const state = useSelector()
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-//      <MealContextProvider>
-<Provider store={store}>
+      // {/* <MealContextProvider> */}
+      <Provider store={store}>
         <SafeAreaView style={{ flex: 1 }}>
           <NavigationContainer>
             <Stack.Navigator
@@ -96,8 +95,8 @@ const state = useSelector()
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaView>
-        </Provider>
-//      </MealContextProvider>
+      </Provider>
+      // {/* </MealContextProvider> */}
     </View>
   );
 }

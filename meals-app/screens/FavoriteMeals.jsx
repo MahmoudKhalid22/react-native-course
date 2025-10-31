@@ -4,13 +4,14 @@ import { MEALS } from "../dummy-data";
 import MealsOverview from "../components/MealsOverview";
 import { Button, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { useSelector } from "react-redux";
 
 function FavoriteMeals({ navigation }) {
-//   const { favoriteMeals } = useContext(FavouriteMeals);
-//   console.log(favoriteMeals);
-  const favoriteMealsIds = useSelector(state => state.favoriteMeals.ids)
-  console.log(favoriteMealsIds);
-  if (favoriteMeals.length === 0) {
+  //   const { favoriteMeals } = useContext(FavouriteMeals);
+  //   console.log(favoriteMeals);
+  const favoriteMealsIds = useSelector((state) => state.favoriteMeals.ids);
+
+  if (favoriteMealsIds.length === 0) {
     return (
       <View style={styles.rootContainer}>
         <Text style={styles.text}>No meals added to your favorite.</Text>
