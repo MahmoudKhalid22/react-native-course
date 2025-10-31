@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
-import FavouriteMeals from "../store/context";
+// import FavouriteMeals from "../store/context";
 import { MEALS } from "../dummy-data";
 import MealsOverview from "../components/MealsOverview";
 import { Button, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 function FavoriteMeals({ navigation }) {
-  const { favoriteMeals } = useContext(FavouriteMeals);
-  console.log(favoriteMeals);
-
+//   const { favoriteMeals } = useContext(FavouriteMeals);
+//   console.log(favoriteMeals);
+  const favoriteMealsIds = useSelector(state => state.favoriteMeals.ids)
+  console.log(favoriteMealsIds);
   if (favoriteMeals.length === 0) {
     return (
       <View style={styles.rootContainer}>
@@ -23,7 +24,7 @@ function FavoriteMeals({ navigation }) {
   }
 
   const displayedMeals = MEALS.filter((meal) =>
-    favoriteMeals.includes(meal.id)
+    favoriteMealsIds.includes(meal.id)
   );
 
   return <MealsOverview displayedMeals={displayedMeals} />;
